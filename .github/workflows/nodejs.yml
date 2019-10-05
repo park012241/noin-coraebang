@@ -27,15 +27,12 @@ jobs:
           yarn
         env:
           CI: true
-      - name: Test
+      - name: Test and send coverage data to Coveralls
         run: |
           yarn test
-        env:
-          CI: true
-      - name: Coveralls
-        run: |
           yarn test:coveralls
         env:
           CI: true
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
           COVERALLS_SERVICE_NAME: Github Actions
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}

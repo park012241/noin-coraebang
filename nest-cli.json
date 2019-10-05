@@ -10,6 +10,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/database/tsconfig.lib.json"
       }
+    },
+    "youtube": {
+      "type": "library",
+      "root": "libs/youtube",
+      "entryFile": "index",
+      "sourceRoot": "libs/youtube/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/youtube/tsconfig.lib.json"
+      }
     }
   },
   "compilerOptions": {
