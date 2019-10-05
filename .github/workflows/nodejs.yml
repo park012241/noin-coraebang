@@ -39,3 +39,5 @@ jobs:
           yarn test:coveralls
         env:
           CI: true
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          COVERALLS_SERVICE_NAME: Github Action
