@@ -4,6 +4,10 @@ on: [push]
 
 jobs:
   build:
+    container:
+      image: mongo:latest
+      ports:
+        - 27017
 
     runs-on: ubuntu-latest
 
