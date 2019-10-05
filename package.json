@@ -7,10 +7,10 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
-    "start:dev": "nest start --watch",
-    "start:debug": "nest start --debug --watch",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
+    "start": "nest start --webpack",
+    "start:dev": "nest start --watch --webpack",
+    "start:debug": "nest start --debug --watch --webpack",
     "start:prod": "node dist/main",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
@@ -26,6 +26,7 @@
     "@nestjs/platform-fastify": "^6.8.2",
     "@nestjs/swagger": "^3.1.0",
     "fastify-swagger": "^2.4.0",
+    "mongodb": "^3.3.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.3",
@@ -37,6 +38,7 @@
     "@nestjs/testing": "^6.7.1",
     "@types/express": "^4.17.1",
     "@types/jest": "^24.0.18",
+    "@types/mongodb": "^3.3.5",
     "@types/node": "^12.7.5",
     "@types/supertest": "^2.0.8",
     "jest": "^24.9.0",
@@ -55,12 +57,19 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": ".",
     "testRegex": ".spec.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "coverageDirectory": "./coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/src/",
+      "<rootDir>/libs/"
+    ],
+    "moduleNameMapper": {
+      "@app/database/(.*)": "<rootDir>/libs/database/src/$1"
+    }
   }
 }

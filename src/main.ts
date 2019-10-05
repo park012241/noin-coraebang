@@ -1,9 +1,14 @@
+import { Database } from '@app/database';
 import { NestFactory } from '@nestjs/core';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
+Database.setConnectUri(process.env.MONGODB_URI || 'mongodb://localhost:27017/noin-coraebang');
+
 async function bootstrap() {
+  await Database.getClient().connect();
+
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
