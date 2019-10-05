@@ -21,12 +21,12 @@ jobs:
         run: |
           wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
           echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
-          sudo apt-get update && sudo apt-get install -y mongodb-org
+          sudo apt-get update && sudo apt-get install -y mongodb-org-server
         env:
           CI: true
-      - name: Yarn install
+      - name: Yarn
         run: |
-          yarn install
+          yarn
         env:
           CI: true
       - name: Test
@@ -34,7 +34,7 @@ jobs:
           yarn test
         env:
           CI: true
-      - name: Coverage Test
+      - name: Coveralls
         run: |
           yarn test:coveralls
         env:
