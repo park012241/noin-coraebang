@@ -2,6 +2,7 @@ import { MongoClient } from 'mongodb';
 import { Database } from './database';
 
 describe('DatabaseLibrary', () => {
+  const connectionUri: string = process.env.MONGODB_URI || 'mongodb://localhost:27017/noin-coraebang';
   let client: MongoClient;
 
   it('should throw when connect URI is undefined', () => {
@@ -17,9 +18,9 @@ describe('DatabaseLibrary', () => {
   });
 
   it('should protect uri overwrite', () => {
-    Database.setConnectUri('mongodb://localhost:27017/noin-coraebang');
+    Database.setConnectUri(connectionUri);
     expect(() => {
-      Database.setConnectUri('mongodb://localhost:27017/noin-coraebang');
+      Database.setConnectUri(connectionUri);
     }).toThrow();
   });
 

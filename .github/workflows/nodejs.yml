@@ -3,7 +3,9 @@ name: Node CI
 on: [push]
 
 jobs:
-  build:
+  test:
+    name: Test And Coveralls
+
     runs-on: ubuntu-latest
 
     steps:
