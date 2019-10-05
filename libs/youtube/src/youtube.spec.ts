@@ -16,10 +16,27 @@ describe('YouTube', () => {
     }).toThrow();
   });
 
+  it('should get same instance', () => {
+    const first = Youtube.getInstance();
+    expect(Youtube.getInstance()).toStrictEqual(first);
+  });
+
+  it('should throw error when part is undefined', async () => {
+    try {
+      await Youtube.search({
+        q: '123456',
+      });
+    } catch (e) {
+      expect(() => {
+        throw e;
+      }).toThrow();
+    }
+  });
+
   it('should search TouTube videos', async () => {
     expect((await Youtube.search({
       part: 'snippet',
       q: '123456',
-    })).items[0].id.videoId).toBe('DSoqC6ERnYA');
+    })).data.items[0].id.videoId).toBe('DSoqC6ERnYA');
   });
 });

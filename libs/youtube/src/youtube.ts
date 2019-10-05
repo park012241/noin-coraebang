@@ -1,3 +1,4 @@
+import { GaxiosResponse } from 'gaxios';
 import { google, youtube_v3 } from 'googleapis';
 
 export class Youtube {
@@ -11,7 +12,7 @@ export class Youtube {
     Youtube.apiKey = key;
   }
 
-  private static getInstance(): youtube_v3.Youtube {
+  public static getInstance(): youtube_v3.Youtube {
     if (!Youtube.instance) {
       Youtube.instance = google.youtube({
         auth: Youtube.apiKey,
@@ -22,31 +23,10 @@ export class Youtube {
     return Youtube.instance;
   }
 
-  public static search(query: youtube_v3.Params$Resource$Search$List, part?: {
-    snippet?: boolean,
-    contentDetails?: boolean,
-    fileDetails?: boolean,
-    player?: boolean,
-    processingDetails?: boolean,
-    recordingDetails?: boolean,
-    statistics?: boolean,
-    status?: boolean,
-    suggestions?: boolean,
-    topicDetails?: boolean,
-  }): Promise<youtube_v3.Schema$SearchListResponse> {
-    return new Promise((resolve, reject) => {
-      Youtube.getInstance().search.list(Object.assign(part ? Object.assign(query, {
-        part: Object.keys(part).reduce((previousValue, currentValue) => {
-          return part[currentValue] ? `${previousValue},${currentValue}` : previousValue;
-        }, ''),
-      }) : query, {
-        auth: Youtube.apiKey,
-      }), (err, result) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(result.data);
-      });
-    });
+  public static search(query: youtube_v3.Params$Resource$Search$List): Promise<GaxiosResponse<youtube_v3.Schema$SearchListResponse>> {
+    if (!query.part || !query.q) {
+      throw new Error('\'part\' and \'q\' is required argument');
+    }
+    return Youtube.getInstance().search.list(query);
   }
 }
