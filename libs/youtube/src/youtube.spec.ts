@@ -1,5 +1,9 @@
 import { config } from 'dotenv';
+import { createWriteStream } from 'fs';
+import { youtube_v3 } from 'googleapis/build/src/apis/youtube/v3';
 import { Youtube } from './youtube';
+
+let videoInfo: youtube_v3.Schema$SearchResult;
 
 describe('YouTube', () => {
   beforeEach(() => {
@@ -33,10 +37,17 @@ describe('YouTube', () => {
     }
   });
 
-  it('should search TouTube videos', async () => {
-    expect((await Youtube.search({
+  it('should search YouTube videos', async () => {
+    videoInfo = (await Youtube.search({
       part: 'snippet',
       q: '123456',
-    })).data.items[0].id.videoId).toBe('DSoqC6ERnYA');
+    })).data.items[0];
+    expect(videoInfo.id.videoId).toBe('DSoqC6ERnYA');
+  });
+
+  it('should downloads video', () => {
+    Youtube.download(videoInfo.id.videoId).on('end', () => {
+      return;
+    }).pipe(createWriteStream('test.mp4'));
   });
 });
