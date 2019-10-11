@@ -1,11 +1,12 @@
 import { GaxiosResponse } from 'gaxios';
 import { google, youtube_v3 } from 'googleapis';
+import * as youtubedl from 'youtube-dl';
 
 export class Youtube {
   private static apiKey: string;
   private static instance: youtube_v3.Youtube;
 
-  public static setApiKey(key: string) {
+  public static setApiKey(key: string): void {
     if (Youtube.apiKey) {
       throw new Error('Api key can be set only once');
     }
@@ -28,5 +29,11 @@ export class Youtube {
       throw new Error('\'part\' and \'q\' is required argument');
     }
     return Youtube.getInstance().search.list(query);
+  }
+
+  public static download(videoId: string): youtubedl.Youtubedl {
+    return youtubedl(`http://www.youtube.com/watch?v=${videoId}`, [], {
+      cwd: __dirname,
+    });
   }
 }
