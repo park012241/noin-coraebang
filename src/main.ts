@@ -11,10 +11,7 @@ Database.setConnectUri(process.env.MONGODB_URI || 'mongodb://localhost:27017/noi
 async function bootstrap() {
   await Database.getClient().connect();
 
-  const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
-    new FastifyAdapter(),
-  );
+  const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
 
   const options = new DocumentBuilder()
     .setTitle('Noin Coraebang API')
