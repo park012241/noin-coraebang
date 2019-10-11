@@ -32,9 +32,7 @@ export class Youtube {
   }
 
   public static download(videoId: string): youtubedl.Youtubedl {
-    return youtubedl(`http://www.youtube.com/watch?v=${videoId}`, [
-      '--format=18',
-    ], {
+    return youtubedl(`http://www.youtube.com/watch?v=${videoId}`, [], {
       cwd: __dirname,
     });
   }
